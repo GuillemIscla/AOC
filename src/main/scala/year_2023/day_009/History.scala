@@ -20,7 +20,7 @@ case class History(singleValueHistory:List[Int]){
     case (historySequences, acc) => acc + historySequences.last
   }
 
-  def getExptrapolation:Int = historySequences.foldRight(0) {
+  def getExtrapolation:Int = historySequences.foldRight(0) {
     case (historySequences, acc) => historySequences.head - acc
   }
 }
