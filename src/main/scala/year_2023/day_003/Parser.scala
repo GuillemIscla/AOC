@@ -17,6 +17,6 @@ object Parser {
         |...$.*....
         |.664.598..""".split("\\|").toList.map(_.toArray.toList))
     }
-    else new EngineSchematic(Source.fromResource("day3_input.txt").getLines().map(_.toArray.toList).toArray.toList)
+    else new EngineSchematic(Source.fromResource("day_003_input.txt").getLines().map(_.toArray.toList).toArray.toList)
   }
 }

@@ -36,7 +36,7 @@ object Parser {
         .L--JL--J.
         ..........""".split("\n").toList))
     }
-    else PipeWeb(parseNodes(Source.fromResource("day10_input.txt").getLines().toList))
+    else PipeWeb(parseNodes(Source.fromResource("day_010_input.txt").getLines().toList))
   }
 
   def parseNodes(lines:List[String]):List[List[PipeNode]] =

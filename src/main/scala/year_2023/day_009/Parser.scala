@@ -10,7 +10,7 @@ object Parser {
         1 3 6 10 15 21
         10 13 16 21 30 45""".split("\n").map(parseHistory).toList
     }
-    else Source.fromResource("day9_input.txt").getLines().map(parseHistory).toList
+    else Source.fromResource("day_009_input.txt").getLines().map(parseHistory).toList
   }
 
   def parseHistory(line:String):History =
