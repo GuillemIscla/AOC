@@ -13,7 +13,7 @@ object Parser {
       "????.######..#####. 1,6,5\n" ++
       "?###???????? 3,2,1\n").split("\n").toList.map(parseHotSpringRecord)
     }
-    else Source.fromResource("day_011_input.txt").getLines().toList.map(parseHotSpringRecord)
+    else Source.fromResource("day_012_input.txt").getLines().toList.map(parseHotSpringRecord)
   }
 
   def parseHotSpringRecord(line:String):HotSpringRecord = {
