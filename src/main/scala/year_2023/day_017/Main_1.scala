@@ -1,7 +1,8 @@
-package year_2023.day_015
+package year_2023.day_017
+
 
 object Main_1 extends App {
-  val input = Parser.readInput(isSample = false)
+  val heatLossMap:HeatLossMap = Parser.readInput(isSample = false)
 
-  println(input.map(ASCII_Transformer.transformLabel))
+  println(heatLossMap.getMinPath)
 }
