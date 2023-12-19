@@ -8,7 +8,7 @@ object ListUtils {
   }
 
   implicit class TableSyntax[A](table: List[List[A]]) {
-    def replace(x: Int, y:Int, a: A): List[List[A]] = ListSyntax(table).replace(x, ListSyntax(table(x)).replace(y, a))
+    def replaceTable(x: Int, y:Int, a: A): List[List[A]] = ListSyntax(table).replace(x, ListSyntax(table(x)).replace(y, a))
 
   }
 
