@@ -19,7 +19,3 @@ object Main_2 extends App {
 
   println(stats.result(stepsLeftToday))
 }
-
-
-
-// result was 609298746763952
