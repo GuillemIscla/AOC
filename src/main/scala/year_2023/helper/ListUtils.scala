@@ -4,6 +4,7 @@ object ListUtils {
 
   implicit class ListSyntax[A](list:List[A]){
     def replace(i:Int, a:A):List[A] = list.take(i) ++ (a :: list.drop(i + 1))
+    def replaceWhere(where:A => Boolean, a:A):List[A] = replace(list.indexWhere(where), a)
 
   }
 

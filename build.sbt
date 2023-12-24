@@ -4,5 +4,6 @@ ThisBuild / scalaVersion := "2.13.12"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "aoc"
+    name := "aoc",
+    libraryDependencies ++= Seq("com.outr" %% "hasher" % "1.2.2")
   )
