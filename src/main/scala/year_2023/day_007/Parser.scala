@@ -12,7 +12,7 @@ object Parser {
           KTJJT 220
           QQQJA 483""".stripMargin.split("\n").toList.map(parseHand(withJoker))
     }
-    else Source.fromResource("day_007_input.txt").getLines().toList.map(parseHand(withJoker))
+    else Source.fromResource("year_2023/day_007_input.txt").getLines().toList.map(parseHand(withJoker))
   }
 
   def parseHand(withJoker:Boolean)(value: String):Hand = {

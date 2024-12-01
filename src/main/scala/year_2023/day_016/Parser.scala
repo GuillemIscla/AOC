@@ -17,7 +17,7 @@ object Parser {
                    |.|....-|.\
                    |..//.|....""".stripMargin.split("\n").toList)
     }
-    else parseContraption(Source.fromResource("day_016_input.txt").getLines().toList)
+    else parseContraption(Source.fromResource("year_2023/day_016_input.txt").getLines().toList)
   }
 
   def parseContraption(lines:List[String]):Contraption =

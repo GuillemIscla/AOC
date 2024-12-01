@@ -25,7 +25,7 @@ object Parser {
         22Z = (22B, 22B)
         XXX = (XXX, XXX)""".stripMargin.split("\n").toList)
     }
-    else parseInput(Source.fromResource("day_008_input.txt").getLines().toList)
+    else parseInput(Source.fromResource("year_2023/day_008_input.txt").getLines().toList)
   }
 
   def parseInput(lines:List[String]):(List[Char], CamelMap) = {

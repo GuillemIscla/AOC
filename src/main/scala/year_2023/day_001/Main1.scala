@@ -40,7 +40,7 @@ object Main1 extends App {
         "pqr3stu8vwx",
         "a1b2c3d4e5f",
         "treb7uchet")
-    else Source.fromResource("day_001_input.txt").getLines().toList
+    else Source.fromResource("year_2023/day_001_input.txt").getLines().toList
 
 
   def parseWord(line:String):Int = {

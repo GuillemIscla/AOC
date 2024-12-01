@@ -37,7 +37,7 @@ object Main_1 extends App {
         |Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red \n
         |Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green""".stripMargin.split("\n").toList.map(parseInput)
     else
-      Source.fromResource("day_002_input.txt").getLines().toList.map(parseInput)
+      Source.fromResource("year_2023/day_002_input.txt").getLines().toList.map(parseInput)
 
   def parseInput(line:String):Game = {
     val (gameId, rawSamples) = parseLineIntoIterator(line)

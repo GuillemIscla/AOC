@@ -24,7 +24,7 @@ object Parser {
                             |{x=2461,m=1339,a=466,s=291}
                             |{x=2127,m=1623,a=2188,s=1013}""".stripMargin.split("\n").toList)
     }
-    else parseInput(Source.fromResource("day_019_input.txt").getLines().toList)
+    else parseInput(Source.fromResource("year_2023/day_019_input.txt").getLines().toList)
   }
 
   def parseInput(lines:List[String]):(WorkflowList, List[GearPart]) = {

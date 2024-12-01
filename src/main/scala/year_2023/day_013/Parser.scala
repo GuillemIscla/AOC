@@ -23,7 +23,7 @@ object Parser {
         |#....#..#
         |""".stripMargin.split("\n\n").toList.map(_.split("\n").toList).map(parseMirrorValley)
     }
-    else Source.fromResource("day_013_input.txt").getLines().mkString("\n").split("\n\n").toList.map(_.split("\n").toList).map(parseMirrorValley)
+    else Source.fromResource("year_2023/day_013_input.txt").getLines().mkString("\n").split("\n\n").toList.map(_.split("\n").toList).map(parseMirrorValley)
   }
 
   def parseMirrorValley(lines:List[String]):MirrorValley = {

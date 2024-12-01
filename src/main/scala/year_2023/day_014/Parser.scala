@@ -17,7 +17,7 @@ object Parser {
         |#....###..
         |#OO..#....""".stripMargin.split("\n").toList)
     }
-    else parseRockField(Source.fromResource("day_014_input.txt").getLines().toList)
+    else parseRockField(Source.fromResource("year_2023/day_014_input.txt").getLines().toList)
   }
 
   def parseRockField(lines:List[String]):RockField = {

@@ -20,7 +20,7 @@ object Parser {
           |%b -> con
           |&con -> output""".stripMargin.split("\n").toList)
     }
-    else parseModuleSet(Source.fromResource("day_020_input.txt").getLines().toList)
+    else parseModuleSet(Source.fromResource("year_2023/day_020_input.txt").getLines().toList)
   }
 
 

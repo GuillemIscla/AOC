@@ -3,10 +3,8 @@ package year_2023.day_021
 
 /**
  * Examination is the code reveals we can write simple arithmetical formulas to resolve some questions
- * which are calculable frm statss
+ * which are calculable frm stats
  * */
-
-
 
 object Main_2 extends App {
 

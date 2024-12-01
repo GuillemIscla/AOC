@@ -10,7 +10,7 @@ object Parser {
       parseInput("""Time:      7  15   30
                     Distance:  9  40  200""".stripMargin.split("\n").toList, hasKerning)
     }
-    else parseInput(Source.fromResource("day_006_input.txt").getLines().toList, hasKerning)
+    else parseInput(Source.fromResource("year_2023/day_006_input.txt").getLines().toList, hasKerning)
   }
 
   def parseInput(input:List[String], hasKenring:Boolean):List[Race] = input match {

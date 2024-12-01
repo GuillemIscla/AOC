@@ -41,7 +41,7 @@ object Parser {
         60 56 37
         56 93 4""".split("\n").toList, withRanges)
     }
-    else parseInput(Source.fromResource("day_005_input.txt").getLines().toList, withRanges)
+    else parseInput(Source.fromResource("year_2023/day_005_input.txt").getLines().toList, withRanges)
   }
 
   def parseInput(input:List[String], withRanges:Boolean):(Seeds, MapChain) = {

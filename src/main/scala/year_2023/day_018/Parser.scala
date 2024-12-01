@@ -27,7 +27,7 @@ object Parser {
           |D 5 (#0dc571)
           |L 2 (#5713f0)""".stripMargin.split("\n").toList.map(parseDigPlanStep))
     }
-    else DigPlan(Source.fromResource("day_018_input.txt").getLines().toList.map(parseDigPlanStep))
+    else DigPlan(Source.fromResource("year_2023/day_018_input.txt").getLines().toList.map(parseDigPlanStep))
   }
 
   def parseDigPlanStep(line:String):DigPlanStep = {

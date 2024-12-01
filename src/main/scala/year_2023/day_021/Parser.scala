@@ -53,7 +53,7 @@ object Parser {
         |.##..##.##..##..##.##..##..##.##.
         |.................................""".stripMargin.split("\n").toList)
     }
-    else parseGarden(Source.fromResource("day_021_input.txt").getLines().toList)
+    else parseGarden(Source.fromResource("year_2023/day_021_input.txt").getLines().toList)
   }
 
 

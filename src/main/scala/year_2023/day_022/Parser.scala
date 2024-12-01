@@ -14,7 +14,7 @@ object Parser {
                     |0,1,6~2,1,6
                     |1,1,8~1,1,9""".stripMargin.split("\n").toList)
     }
-    else parseBricksCascade(Source.fromResource("day_022_input.txt").getLines().toList)
+    else parseBricksCascade(Source.fromResource("year_2023/day_022_input.txt").getLines().toList)
   }
 
   def parseBricksCascade(lines:List[String]):BricksCascade =

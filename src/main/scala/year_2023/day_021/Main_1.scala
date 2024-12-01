@@ -8,7 +8,7 @@ object Main_1 extends App {
 
   var visitedToday:List[Coordinate] = List(start)
 
-  val stepsLeftToday = 262
+  val stepsLeftToday = 64
 
   var i = 0
   while(i < stepsLeftToday){
@@ -21,12 +21,8 @@ object Main_1 extends App {
 
        }
     }.distinct
-
-//    println(s"$i ${visitedToday.size} ${visitedToday.filter{case Coordinate(_, _, map_x, map_y) => Math.abs(map_x) + Math.abs(map_y) <= 4 }.size}")
     i += 1
   }
-
-  println(s"(${i + 1},${visitedToday.groupBy(c => (c.map_x, c.map_y)).view.mapValues(_.size).toMap},")
 
   println(visitedToday.size)
 

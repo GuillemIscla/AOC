@@ -18,7 +18,7 @@ object Parser {
       #...#.....
 """.split("\n").toList))
     }
-    else UniverseMap(parseRawMap(Source.fromResource("day_011_input.txt").getLines().toList))
+    else UniverseMap(parseRawMap(Source.fromResource("year_2023/day_011_input.txt").getLines().toList))
   }
 
   def parseRawMap(lines:List[String]):List[List[UniverseObject]] =

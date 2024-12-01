@@ -20,7 +20,7 @@ object Parser {
                    |2546548887735
                    |4322674655533""".stripMargin.split("\n").toList)
     }
-    else parseInput(Source.fromResource("day_017_input.txt").getLines().toList)
+    else parseInput(Source.fromResource("year_2023/day_017_input.txt").getLines().toList)
   }
 
   def parseInput(lines:List[String]):HeatLossMap = {

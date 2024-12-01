@@ -53,7 +53,7 @@ object Main2 extends App {
         "4nineeightseven2",
         "zoneight234",
         "7pqrstsixteen")
-    else Source.fromResource("day_001_input.txt").getLines().toList
+    else Source.fromResource("year_2023/day_001_input.txt").getLines().toList
 
 
 //54498 too high
