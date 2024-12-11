@@ -12,16 +12,8 @@ object Main1 extends App {
   var currentMap = input
 
   while(currentMap.freeSpaceCount > 1 ){
-
-    if(currentMap.freeSpaceCount < 10){
-//      println(currentMap.raw.take(10))
-      println(currentMap.raw.takeRight(10))
-    }
     currentMap = currentMap.moveBlock
-//    println(currentMap)
   }
-//  println(currentMap.raw.take(10))
-  println(currentMap.raw.takeRight(10))
   println(currentMap.checksum)
 
 }

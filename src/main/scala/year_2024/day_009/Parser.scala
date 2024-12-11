@@ -20,7 +20,10 @@ object Parser {
         (acc  :+ File(nextId, currentPosition, newInt), nextId + 1, currentPosition + newInt, true)
       case ((acc, nextId, currentPosition, true), newInt) =>
         (acc :+ FreeSpace(currentPosition, newInt), nextId, currentPosition + newInt, false)
-    }._1)
+    }._1.filter{
+      case _: File => true
+      case free => free.size > 0
+    })
   }
 
 
