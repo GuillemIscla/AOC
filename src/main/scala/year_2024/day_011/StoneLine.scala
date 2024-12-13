@@ -21,7 +21,7 @@ case class StoneLine(stones:List[Stone]){
     WeightedStones(stones.map(s => (s, 1)))
 }
 
-case class WeightedStones(stonesAndWeights:List[(Stone, BigInt)]){
+case class WeightedStones(stonesAndWeights:List[(Stone, Long)]){
   def blink:WeightedStones =
     WeightedStones {
       stonesAndWeights.flatMap {
