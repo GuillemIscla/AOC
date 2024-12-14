@@ -31,7 +31,7 @@ object Main2 extends App {
             })
       })
   }
-  
+
   val areasWithSides = areasWithFences.map{
     case (area, fences) => (area, input.fencesToSides(fences))
   }
