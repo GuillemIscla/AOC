@@ -17,38 +17,21 @@ trait Keypad {
     }._2.distinct
   }
 
-  def dialListCount(list: List[Key], deep: Int): Long = {
-    if (deep == 0) list.size
-    else {
-      list.foldLeft((Key.fromChar("A"), 0L)) {
-        case ((previous, count), next) =>
-          (next, count + dialSingleCount(previous, next, deep))
-      }._2
-    }
-  }
-
-  def dialSingleCount(origin: Key, destination: Key, deep: Int): Long = {
-    memoize.get(origin, destination, deep) match {
-      case Some(value) => value
-      case None =>
-        DirectionKeypad.dialOne(origin, destination) match {
-          case head :: Nil =>
-            val result = dialListCount(head, deep - 1)
-            memoize.addOne((origin, destination, deep) -> result)
-            result
-          case head :: second :: Nil =>
-            val result1 = dialListCount(head, deep - 1)
-            val result2 = dialListCount(second, deep - 1)
-            val result = Math.min(result1, result2)
-            memoize.addOne((origin, destination, deep) -> result)
-            result
-        }
-    }
-  }
-
   protected val distribution:Map[Key, (Int, Int)]
 
   protected val forbidden: (Int, Int)
+
+  def dialOne(origin: Key, destination: Key): List[List[Key]] = {
+    val (x_1, y_1) = distribution(origin)
+    val (x_2, y_2) = distribution(destination)
+    val (x_3, y_3) = (x_1 - x_2, y_1 - y_2)
+    val horizontal: List[Key] = List.fill(Math.abs(y_3))(if (y_3 > 0) Left else Right)
+    val vertical: List[Key] = List.fill(Math.abs(x_3))(if (x_3 > 0) Up else Down)
+
+    List(horizontal ++ vertical :+ A, vertical ++ horizontal :+ A)
+      .filter(isValid(origin)).distinct
+
+  }
 
   def isValid(origin: Key)(path: List[Key]): Boolean = {
     def keyToOffset(key:Key):(Int, Int) = key match {
@@ -67,17 +50,37 @@ trait Keypad {
     }._2
   }
 
-  def dialOne(origin: Key, destination: Key): List[List[Key]] = {
-    val (x_1, y_1) = distribution(origin)
-    val (x_2, y_2) = distribution(destination)
-    val (x_3, y_3) = (x_1 - x_2, y_1 - y_2)
-    val horizontal:List[Key] = List.fill(Math.abs(y_3))(if (y_3 > 0) Left else Right)
-    val vertical:List[Key] = List.fill(Math.abs(x_3))(if (x_3 > 0) Up else Down)
 
-    List(horizontal ++ vertical :+ A, vertical ++ horizontal :+ A)
-      .filter(isValid(origin)).distinct
 
+  def dialListCount(list: List[Key], deep: Int): Long = {
+    if (deep == 0) list.size
+    else {
+      list.foldLeft((Key.fromChar("A"), 0L)) {
+        case ((previous, count), next) =>
+          (next, count + dialSingleCount(previous, next, deep))
+      }._2
+    }
   }
+
+  def dialSingleCount(origin: Key, destination: Key, deep: Int): Long = {
+    memoize.get(origin, destination, deep) match {
+      case Some(value) => value
+      case None =>
+        dialOne(origin, destination) match {
+          case head :: Nil =>
+            val result = dialListCount(head, deep - 1)
+            memoize.addOne((origin, destination, deep) -> result)
+            result
+          case head :: second :: Nil =>
+            val result1 = dialListCount(head, deep - 1)
+            val result2 = dialListCount(second, deep - 1)
+            val result = Math.min(result1, result2)
+            memoize.addOne((origin, destination, deep) -> result)
+            result
+        }
+    }
+  }
+
 }
 
 object Keypad {
