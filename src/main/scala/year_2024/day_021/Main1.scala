@@ -5,15 +5,12 @@ import year_2024.day_021.Key._
 
 object Main1 extends App {
 
-  val inputs = Parser.readInput(isSample = false)
-
-  val input = List(Number(3))
+  val inputs = Parser.readInput(isSample = true)
 
   println(inputs.map(keys => (keyListToNumber(keys), dialNested(keys)))
   .map{
     case (numberFromKey, dialed) => numberFromKey * dialed.size
   }.sum)
-
 
   def dialNested(keys:List[Key]):List[Key] = {
     val possibilities =

@@ -7,7 +7,7 @@ import scala.collection.mutable
 
 trait Keypad {
   def dial(input: List[Key]): List[List[Key]] = {
-    input.foldLeft((Key.fromChar("A"), List(List.empty[Key]))){
+    input.foldLeft((A:Key, List(List.empty[Key]))){
       case ((initialKey, accList), finalKey) =>
         val dialedList = dialOne(initialKey, finalKey)
         (finalKey, for {
@@ -55,7 +55,7 @@ trait Keypad {
   def dialListCount(list: List[Key], deep: Int): Long = {
     if (deep == 0) list.size
     else {
-      list.foldLeft((Key.fromChar("A"), 0L)) {
+      list.foldLeft((A:Key, 0L)) {
         case ((previous, count), next) =>
           (next, count + dialSingleCount(previous, next, deep))
       }._2
