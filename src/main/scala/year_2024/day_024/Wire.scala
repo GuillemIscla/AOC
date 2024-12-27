@@ -47,7 +47,7 @@ case class SwapManager(swaps:Map[String, String]){
   def printSwaps:String = swaps.flatMap {
     case (a, b) => List(a, b)
   }.toList.distinct.sorted.mkString(",")
-  def swapWire(wire:String):String = swaps.getOrElse(wire, wire)
+  def swapWire(wire:String):(String, Boolean) = (swaps.getOrElse(wire, wire), swaps.keys.exists(_ == wire))
 }
 
 

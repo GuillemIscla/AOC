@@ -1,57 +1,43 @@
 package year_2023.day_025
 
-import scala.annotation.tailrec
-
-
-case class ComponentBuilder(name:String){
-  var wired:List[String] = List.empty
-  def addComponent(componentName: String):Unit =
-    wired = componentName :: wired
-  def toComponent:Component = Component(name, wired)
+case class Component(name:String, connected:Set[String])
+case class MegaComponent(name:String, subComponents:Set[String]){
+  def addComponent(componentName:String):MegaComponent = MegaComponent(name, subComponents + componentName)
 }
 
-case class Component(name:String, wired:List[String])
+case class Edge(between:(String, String), weight:Int)
 
-case class Apparatus(components:List[Component]) {
-  def disconnect(wire:(String, String)):Apparatus = {
-    val (nameA, nameB) = wire
-    Apparatus(components.map{
-      case Component(name, wired) if name == nameA || name == nameB =>
-        Component(name, wired.filter(wire => wire != nameA && wire != nameB))
-      case otherComponent => otherComponent
-    })
-  }
-  def groups:List[Set[String]] = {
-    components.map(_.name) match {
-      case head :: tail =>
-        groupsInternal(tail, toVisit = Set(head), explored = Set.empty, groups = List.empty)
-      case other =>
-        other.map(component => Set(component))
-    }
-  }
-
-  @tailrec
-  private def groupsInternal(remaining:List[String], toVisit:Set[String], explored:Set[String], groups:List[Set[String]]):List[Set[String]] = {
-    toVisit.toList match {
-      case toVisitHead :: toVisitTail =>
-        val connected = components.find(_.name == toVisitHead).toList.flatMap(_.wired)
-        val newRemaining = remaining.filterNot(connected.contains)
-        val newToVisit = (toVisitTail ++ connected).filterNot(explored.contains)
-        val newExplored = explored + toVisitHead
-        groupsInternal(newRemaining, newToVisit.toSet, newExplored, groups)
-      case Nil =>
-        val newGroups = explored :: groups
-        remaining match {
-          case remainingHead :: remainingTail =>
-            groupsInternal(remainingTail, Set(remainingHead), explored = Set.empty, newGroups)
-          case Nil =>
-            newGroups
+case class Apparatus(nodes:List[Component]){
+  def allEdges(megaNodes:Set[MegaComponent] = Set.empty)(node:String):List[Edge] = {
+    val nodeToSimple =
+      megaNodes
+        .find(_.name == node)
+        .map(_.subComponents)
+        .getOrElse(Set(node))
+        .flatMap(allEdgesSimpleNode)
+        .groupBy(_.between._2).toList
+        .map{
+          case (key, grouped) =>
+            Edge((node, key), grouped.toList.map(_.weight).sum)
         }
-    }
+    megaNodes.foldLeft(nodeToSimple){
+      case (acc, newMegaNode) =>
+        acc
+          .groupBy(node => newMegaNode.subComponents.contains(node.between._2))
+          .foldLeft(List.empty[Edge]){
+            case (acc, (false, edges)) => acc ++ edges
+            case (acc, (true, edges)) => acc ++ edges.map(v => Edge((v.between._1, newMegaNode.name), v.weight))
+          }
+    }.distinct.filterNot(selfEdge => selfEdge.between._1 == selfEdge.between._2)
   }
 
-//  def stoerWagnerUntil(cutSize:Int):List[(String, String)] = {
-//    def unify(allNodes:List[Component]):(Component, List[Component]) = ???
-//    val (newSuperNode, restNodes) = unify(components)
-//  }
+  def newMegaComponent(megaNodes:Set[MegaComponent] = Set.empty)(node:String):MegaComponent =
+    MegaComponent((nodes.size + megaNodes.size).toString, Set(node))
+
+  private def allEdgesSimpleNode(node:String):Set[Edge] = {
+    val connectedNodes = nodes.find(_.name == node).get.connected
+    connectedNodes.map{
+      connectedNode => Edge((node, connectedNode), 1)
+    }
+  }
 }

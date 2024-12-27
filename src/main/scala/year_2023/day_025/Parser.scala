@@ -25,25 +25,31 @@ object Parser {
 
   def parseApparatus(lines:List[String]):Apparatus = {
     val wiredRegex = "([a-z]+):(( [a-z]+)+)".r
-    val parsedLines = lines.map{
+    val parsedLines = lines.map {
       line =>
         val result = wiredRegex.findFirstMatchIn(line).getOrElse(throw new Exception(s"Could not parse line '$line'"))
 
-        (ComponentBuilder(result.group(1)), result.group(2).tail.split(" ").toList.map(ComponentBuilder.apply))
+        (result.group(1), result.group(2).tail.split(" ").toList)
     }
 
-    val components = parsedLines.flatMap{ case (right, leftList) => right :: leftList }.distinct
-    parsedLines.foreach{
-      case (right, leftList) =>
-        val rightC = components.find(_.name == right.name).get
-        val leftC = leftList.flatMap(c => components.find(_.name == c.name))
-        leftC.foreach{
-          c =>
-            c.addComponent(rightC.name)
-            rightC.addComponent(c.name)
-        }
-    }
-    Apparatus(components.map(_.toComponent))
+    val componentNames = parsedLines.flatMap { case (right, leftList) => right :: leftList }.distinct
+    Apparatus(
+      componentNames.map{
+        componentName =>
+
+          val edges1 = parsedLines.find(_._1 == componentName) match {
+            case Some((_, connectedComponents)) => connectedComponents.toSet
+            case None => Set.empty
+          }
+          val edges2 = parsedLines.flatMap {
+            case (origin, connected) if connected.contains(componentName) => Some(origin)
+            case _ => None
+          }.toSet
+
+          Component(componentName, edges1 ++ edges2)
+      }
+    )
+
   }
 
 

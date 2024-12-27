@@ -42,26 +42,24 @@ object Main2 extends App {
       val aIGate = aGate(i)
       val bIGate = bGate(i)
       val cIGate = cGate(i, aWires(i-1))
-      val (bIWire, cIWire) = bWireCWire(i, bIGate, cIGate, swapManagerAcc)
+      val zIWire = zWire(i)
+      val (bIWire, cIWire) = bWireCWire(i, zIWire, bIGate, cIGate, swapManagerAcc)
       val dIGate = dGate(i, bIWire)
       val (aIWire, dIWire) = aWireDWire(i, aIGate, dIGate, swapManagerAcc)
       val zIGate = zGate(i, bIWire)
-      val zIWire = swapManagerAcc.swapWire(zWire(i))
       val newSwaps = List(
         (aIGate.cName, aIWire),
         (bIGate.cName, bIWire),
         (cIGate.cName, cIWire),
         (dIGate.cName, dIWire),
         (zIGate.cName, zIWire)
-      ).filter{
+      ).filter {
         case (a, b) => a != b
       }
-      
 
       (aWires :+ aIWire, bWires :+ bIWire, cWires :+ cIWire, dWires :+ dIWire, swapManagerAcc.addSwaps(newSwaps))
   }
 
-  println(swapManager.swaps.size)
   println(swapManager.printSwaps)
 
   def aGate(i:Int):Gate = {
@@ -77,23 +75,18 @@ object Main2 extends App {
           g.gateType == XOR
     )
   }
-  def bWireCWire(i: Int, bIGate:Gate, cIGate:Gate, swapManager: SwapManager): (String, String) = {
-    val bWire = swapManager.swapWire(bIGate.cName)
-    val cWire = swapManager.swapWire(cIGate.cName)
-    val bIsReal =
-      initialGates.exists(g => g.inputs.contains(bWire) && g.gateType == AND) &&
-        initialGates.exists(g => g.inputs.contains(bWire) && g.gateType == XOR)
-    val cIsReal =
-      initialGates.exists(g => g.inputs.contains(cWire) && g.gateType == AND) &&
-        initialGates.exists(g => g.inputs.contains(cWire) && g.gateType == XOR)
-    if(bIsReal && cIsReal) (bWire, cWire)
-    else if(bIsReal){
-      val zGate = lookForGate("bWireCWire", i)(g => g.inputs.contains(bWire) && g.gateType == XOR)
-      (bWire, zGate.inputs.find(_ != bWire).get)
-    }
+  def bWireCWire(i: Int, zWire:String, bIGate:Gate, cIGate:Gate, swapManager: SwapManager): (String, String) = {
+    val (bWire, bWasSwapped) = swapManager.swapWire(bIGate.cName)
+    val (cWire, cWasSwapped) = swapManager.swapWire(cIGate.cName)
+    if(bWasSwapped || cWasSwapped) (bWire, cWire)
     else {
-      val zGate = lookForGate("bWireCWire", i)(g => g.inputs.contains(cWire) && g.gateType == XOR)
-      (zGate.inputs.find(_ != cWire).get, cWire)
+      val inputs = lookForGate("bWireCWirePossibilities", i){
+        g => g.gateType == XOR && Set(bWire, cWire, zWire).intersect(Set(g.aName, g.bName, g.cName)).size > 1
+      }.inputs
+      if(inputs.contains(bWire))
+        (bWire, inputs.find(_ != bWire).get)
+      else
+        (inputs.find(_ != cWire).get, cWire)
     }
   }
   def dGate(i:Int, bIWire:String): Gate = {
@@ -102,23 +95,18 @@ object Main2 extends App {
     )
   }
   def aWireDWire(i:Int, aGate:Gate, dGate:Gate, swapManager: SwapManager): (String, String) = {
-    val aWire = swapManager.swapWire(aGate.cName)
-    val dWire = swapManager.swapWire(dGate.cName)
-    val bothReal = initialGates.exists(g =>
-      g.inputs == Set(aWire, dWire) && g.gateType == OR
-    )
-    if(bothReal) (aWire, dWire)
+    val (aWire, aWasSwapped) = swapManager.swapWire(aGate.cName)
+    val (dWire, dWasSwapped) = swapManager.swapWire(dGate.cName)
+
+    if(aWasSwapped || dWasSwapped) (aWire, dWire)
     else {
-      initialGates.find(g =>
-        g.inputs.contains(dWire) && g.gateType == OR
-      ) match {
-        case Some(cPlus1Gate) =>
-          (cPlus1Gate.inputs.find(_ != dWire).get, dWire)
-        case None =>
-          (aWire, initialGates.find(g =>
-            g.inputs.contains(aWire) && g.gateType == OR
-          ).get.inputs.find(_ != aWire).get)
-      }
+      val inputs = lookForGate("aWireDWirePossibilities", i) {
+        g => g.gateType == OR && Set(aWire, dWire).intersect(g.inputs).nonEmpty
+      }.inputs
+      if (inputs.contains(aWire))
+        (aWire, inputs.find(_ != aWire).get)
+      else
+        (inputs.find(_ != dWire).get, dWire)
     }
   }
   def cGate(i:Int, aI1Wire:String): Gate  = {
