@@ -1,10 +1,12 @@
-.bsp/
-.idea/
-target/
-src/main/resources/
-src/main/rust/inputs/
-src/main/rust/.idea/
-src/main/rust/target/
+scala/.bsp/
+scala/.idea/
+scala/target/
+scala/project/target/
+scala/src/main/resources/
+rust/inputs/
+rust/.idea/
+rust/target/
+go/inputs/
 
 
 # Added by cargo
