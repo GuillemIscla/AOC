@@ -1,5 +1,5 @@
-mod year_2015;
-use year_2015::day_025 as current_day;
+mod year_2025;
+use year_2025::day_001 as current_day;
 
 fn main() {
     current_day::part_1();
