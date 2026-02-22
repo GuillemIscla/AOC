@@ -1,8 +1,5 @@
 package main
 
-// 51
-// 53
-
 func part2() int {
 	// v := 1
 	// favoriteNumber, _ := parseInput(&v)
