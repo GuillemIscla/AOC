@@ -1,2 +1,3 @@
 pub mod day_001;
 pub mod day_002;
+pub mod day_003;

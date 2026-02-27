@@ -3,7 +3,7 @@ scala/.idea/
 scala/target/
 scala/project/target/
 scala/src/main/resources/
-rust/src/inputs/
+rust/inputs/
 rust/.idea/
 rust/target/
 go/inputs/
