@@ -1,4 +1,4 @@
-use crate::current_day::rotation::Rotation;
+use super::rotation::Rotation;
 use indoc::indoc;
 use std::fs::File;
 use std::io::{self, BufRead};
