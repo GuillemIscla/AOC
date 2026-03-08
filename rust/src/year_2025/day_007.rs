@@ -1,4 +1,4 @@
-use crate::current_day::tachyon_diagram::TachyonBeamResult;
+use crate::year_2025::day_007::tachyon_diagram::TachyonBeamResult;
 use parse::*;
 
 mod parse;
