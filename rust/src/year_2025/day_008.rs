@@ -1,5 +1,5 @@
 use std::collections::{HashMap, VecDeque};
-use crate::current_day::measured_pair::MeasuredPair;
+use crate::year_2025::day_008::measured_pair::MeasuredPair;
 use itertools::Itertools;
 use parse::*;
 
