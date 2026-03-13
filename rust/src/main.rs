@@ -3,7 +3,7 @@ mod year_2025;
 use year_2025 as current_year;
 
 fn main() {
-    let current_day = 9;
+    let current_day = 10;
     match current_day {
         1 => {
             current_year::day_001::part_1();
@@ -41,10 +41,10 @@ fn main() {
             current_year::day_009::part_1();
             current_year::day_009::part_2();
         }
-        //10 => {
-        //    current_year::day_011::part_1();
-        //    current_year::day_011::part_2();
-        //},
+        10 => {
+            current_year::day_010::part_1();
+            current_year::day_010::part_2();
+        }
         //11 => {
         //    current_year::day_011::part_1();
         //    current_year::day_011::part_2();

@@ -22,8 +22,6 @@ pub fn part_1() {
     println!("Part 1: {}", max_area);
 }
 
-// 4582310446 too high
-// 1513792010
 #[allow(dead_code)]
 pub fn part_2() {
     let tiles = parse(None);
