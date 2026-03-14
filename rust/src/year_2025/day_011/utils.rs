@@ -9,23 +9,23 @@ pub fn path_count_deep_first(
 ) -> u32 {
     match &cache.get(&origin) {
         Some(cached_value) => **cached_value,
-        None => devices
-            .iter()
-            .find_map(|device| {
-                if device.id == origin {
-                    Some(device.go_to.clone())
-                } else {
-                    None
-                }
-            })
-            .unwrap()
-            .iter()
-            .map(|next_device| {
-                let partial_result = path_count_deep_first(next_device.to_string(), devices, cache);
-                cache.insert(next_device.to_string(), partial_result);
-                partial_result
-            })
-            .sum(),
+        None => {
+            let result = devices
+                .iter()
+                .find_map(|device| {
+                    if device.id == origin {
+                        Some(device.go_to.clone())
+                    } else {
+                        None
+                    }
+                })
+                .unwrap()
+                .iter()
+                .map(|next_device| path_count_deep_first(next_device.to_string(), devices, cache))
+                .sum();
+            cache.insert(origin, result);
+            result
+        }
     }
 }
 
